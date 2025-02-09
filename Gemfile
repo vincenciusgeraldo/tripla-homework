@@ -44,8 +44,11 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+  gem "dotenv-rails", "~> 3.1"
+  gem 'factory_bot_rails'
+  gem 'simplecov'
 end
-
-
-
+gem 'jwt' # For JWT authentication
 gem "mysql2", "~> 0.5.6"
+
+gem "rspec-rails", "~> 7.1"

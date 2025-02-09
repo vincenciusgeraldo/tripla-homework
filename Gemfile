@@ -47,3 +47,5 @@ group :development, :test do
 end
 
 
+
+gem "mysql2", "~> 0.5.6"

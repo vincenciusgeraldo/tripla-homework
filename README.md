@@ -1,24 +1,87 @@
-# README
+# Sleep Tracker API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project is a Sleep Tracker API built with Ruby on Rails. It allows users to record their sleep and awake times, and view sleep trackers of their followers.
 
-Things you may want to cover:
+## Prerequisites
 
-* Ruby version
+- Ruby
+- Rails
+- Bundler
+- MySQL
 
-* System dependencies
+## Setup
 
-* Configuration
+1. Clone the repository:
 
-* Database creation
+   ```sh
+   git clone https://github.com/vincenciusgeraldo/sleep-tracker-api.git
+   cd sleep-tracker-api
+   ```
 
-* Database initialization
+2. Install dependencies:
 
-* How to run the test suite
+   ```sh
+   bundle install
+   ```
 
-* Services (job queues, cache servers, search engines, etc.)
+3. Set up the database:
 
-* Deployment instructions
+   ```sh
+   rails db:create
+   rails db:migrate
+   rails db:seed
+   ```
 
-* ...
+4. Start the server:
+
+   ```sh
+   rails server
+   ```
+
+## Running Tests
+
+To run the test suite, use the following command:
+
+```sh
+bundle exec rspec
+```
+
+## API Endpoints
+
+### Record Sleep
+
+- **URL:** `/sleep-trackers/sleep`
+- **Method:** `POST`
+- **Description:** Records the sleep time for the current user.
+- **Response:**
+    - `201 Created` if the sleep record is created successfully.
+    - `409 Conflict` if the sleep record is already recorded.
+
+### Record Awake
+
+- **URL:** `/sleep-trackers/awake`
+- **Method:** `POST`
+- **Description:** Records the awake time for the current user.
+- **Response:**
+    - `200 OK` if the awake time is recorded successfully.
+    - `404 Not Found` if no sleep record is found.
+
+### Followers' Sleep Trackers
+
+- **URL:** `/sleep-trackers/followers`
+- **Method:** `GET`
+- **Description:** Retrieves the sleep trackers of the current user's followers.
+- **Response:**
+    - `200 OK` with the list of sleep trackers.
+
+## Authentication
+
+This API uses JWT for authentication. Include the token in the `Authorization` header as follows:
+
+```
+Authorization: Bearer <token>
+```
+
+## License
+
+This project is licensed under the MIT License. See the `LICENSE` file for more details.

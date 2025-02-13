@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
-  resources :sleep_trackers, only: [] do
+  resources :sleep_trackers, path: "sleep-trackers", only: [] do
     collection do
       get "followers" => "sleep_trackers#followers_sleep_trackers"
       post "sleep" => "sleep_trackers#record_sleep"
       post "awake" => "sleep_trackers#record_awake"
+      get "me" => "sleep_trackers#my_sleep_trackers"
     end
   end
   resources :users, only: [] do

@@ -8,7 +8,6 @@ RSpec.describe SleepTrackersController, type: :controller do
     allow(controller).to receive(:authenticate).and_return(true)
     allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(current_user)
     allow(controller).to receive(:set_sleep_tracker).and_return(sleep_tracker)
-    allow(controller).to receive(:user_sleep_trackers).and_return([ sleep_tracker ])
     allow(controller).to receive(:sleep_tracker).and_return(sleep_tracker)
   end
 
@@ -29,7 +28,7 @@ RSpec.describe SleepTrackersController, type: :controller do
       it "creates a new sleep record" do
         post :record_sleep
         expect(response).to have_http_status(:created)
-        expect(JSON.parse(response.body).first["user_id"]).to eq(current_user.id)
+        expect(JSON.parse(response.body)["data"]["user_id"]).to eq(current_user.id)
       end
     end
   end
@@ -41,7 +40,7 @@ RSpec.describe SleepTrackersController, type: :controller do
       it "updates the sleep record with awake time" do
         post :record_awake
         expect(response).to have_http_status(:ok)
-        expect(JSON.parse(response.body).first["awake_at"]).not_to be_nil
+        expect(JSON.parse(response.body)["data"]["awake_at"]).not_to be_nil
       end
     end
 
@@ -53,6 +52,17 @@ RSpec.describe SleepTrackersController, type: :controller do
         expect(response).to have_http_status(:not_found)
         expect(JSON.parse(response.body)["error"]).to eq("No sleep record found")
       end
+    end
+  end
+
+  describe "GET #my_sleep_trackers" do
+    let!(:sleep_trackers) { create_list(:sleep_tracker, 10, user: current_user, sleep_at: Time.current, awake_at: Time.current) }
+
+    it "returns paginated sleep trackers" do
+      get :my_sleep_trackers, params: { limit: 5, offset: 0 }
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)["data"].size).to eq(5)
+      expect(JSON.parse(response.body)["data"].size).to be <= 5
     end
   end
 

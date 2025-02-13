@@ -161,13 +161,43 @@ bundle exec rspec
   ```
 </details>
 
-## Authentication
+### My Sleep Trackers
 
-This API uses JWT for authentication. Include the token in the `Authorization` header as follows:
+- **URL:** `/sleep-trackers/my_sleep_trackers`
+- **Method:** `GET`
+- **Description:** Retrieves the current user's sleep trackers with pagination.
+- **Parameters:**
+    - `limit` (optional): Number of records to return. Default is 10.
+    - `offset` (optional): Number of records to skip. Default is 0.
+- **Response:**
+    - `200 OK` with the list of sleep trackers and pagination metadata.
 
+<details>
+  <summary>Example Response</summary>
+
+  ```json
+  {
+    "data": [
+      {
+        "id": 1,
+        "sleep_at": "2023-10-10T22:00:00Z",
+        "awake_at": "2023-10-11T06:00:00Z",
+        "duration": 28800
+      },
+      {
+        "id": 2,
+        "sleep_at": "2023-10-11T22:00:00Z",
+        "awake_at": "2023-10-12T06:00:00Z",
+        "duration": 28800
+      }
+    ],
+    "meta": {
+      "limit": 10,
+      "offset": 0
+    }
+  }
 ```
-Authorization: Bearer <token>
-```
+</details>
 
 
 ## Authentication

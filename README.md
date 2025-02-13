@@ -57,6 +57,19 @@ bundle exec rspec
     - `201 Created` if the sleep record is created successfully.
     - `409 Conflict` if the sleep record is already recorded.
 
+<details>
+  <summary>Example Response</summary>
+
+  ```json
+  {
+    "id": 1,
+    "sleep_at": "2023-10-10T22:00:00Z",
+    "awake_at": null,
+    "duration": null
+  }
+  ```
+</details>
+
 ### Record Awake
 
 - **URL:** `/sleep-trackers/awake`
@@ -66,6 +79,19 @@ bundle exec rspec
     - `200 OK` if the awake time is recorded successfully.
     - `404 Not Found` if no sleep record is found.
 
+<details>
+  <summary>Example Response</summary>
+
+  ```json
+  {
+    "id": 1,
+    "sleep_at": "2023-10-10T22:00:00Z",
+    "awake_at": "2023-10-11T06:00:00Z",
+    "duration": 28800
+  }
+  ```
+</details>
+
 ### Followers' Sleep Trackers
 
 - **URL:** `/sleep-trackers/followers`
@@ -73,6 +99,76 @@ bundle exec rspec
 - **Description:** Retrieves the sleep trackers of the current user's followers.
 - **Response:**
     - `200 OK` with the list of sleep trackers.
+
+<details>
+  <summary>Example Response</summary>
+
+  ```json
+  [
+    {
+      "id": 2,
+      "name": "Bob",
+      "sleep_at": "2023-10-10T22:00:00Z",
+      "awake_at": "2023-10-11T05:00:00Z",
+      "duration": 25200
+    },
+    {
+      "id": 3,
+      "name": "Charlie",
+      "sleep_at": "2023-10-10T22:00:00Z",
+      "awake_at": "2023-10-11T04:00:00Z",
+      "duration": 21600
+    }
+  ]
+  ```
+</details>
+
+### Follow User
+
+- **URL:** `/users/:id/follow`
+- **Method:** `POST`
+- **Description:** Follows the user with the specified ID.
+- **Response:**
+  - `200 OK` if the user is followed successfully.
+  - `409 Conflict` if the user is already being followed.
+
+<details>
+  <summary>Example Response</summary>
+
+  ```json
+  {
+    "message": "Followed"
+  }
+  ```
+</details>
+
+### Unfollow User
+
+- **URL:** `/users/:id/unfollow`
+- **Method:** `POST`
+- **Description:** Unfollows the user with the specified ID.
+- **Response:**
+  - `200 OK` if the user is unfollowed successfully.
+  - `409 Conflict` if the user is not being followed.
+
+<details>
+  <summary>Example Response</summary>
+
+  ```json
+  {
+    "message": "Unfollowed"
+  }
+  ```
+</details>
+
+## Authentication
+
+This API uses JWT for authentication. Include the token in the `Authorization` header as follows:
+
+```
+Authorization: Bearer <token>
+```
+
 
 ## Authentication
 
